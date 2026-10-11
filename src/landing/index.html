@@ -525,7 +525,7 @@
       <a href="#features">Features</a>
       <a href="#pricing">Pricing</a>
     </div>
-    <a href="#pricing" class="nav-cta">Get Early Access</a>
+    <a href="#pricing" class="nav-cta" data-track="nav_early_access">Get Early Access</a>
     <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
@@ -547,7 +547,7 @@
       MoneyVerse reads your bank notifications and tracks every rupee automatically. Set budgets, catch sneaky subscriptions, and ask AI before impulse buys.
     </p>
     <div class="hero-btns reveal reveal-delay-3">
-      <a href="#pricing" class="btn btn--primary">
+      <a href="#pricing" class="btn btn--primary" data-track="hero_join_waitlist">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 18.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm-12 0a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM3 1h2l.4 2H21a1 1 0 01.97 1.24l-2.5 10A1 1 0 0118.5 15H7.21l-.94-2H17l2-8H5.82L4.64 1H3z"/></svg>
         Join the Waitlist - Free
       </a>
@@ -1010,7 +1010,7 @@
           <li class="disabled"><span class="icon icon--no">-</span> Family groups &amp; shared budgets</li>
           <li class="disabled"><span class="icon icon--no">-</span> Advanced analytics</li>
         </ul>
-        <button class="pricing-btn pricing-btn--ghost">Get Started Free</button>
+        <button class="pricing-btn pricing-btn--ghost" data-track="pricing_get_started_free">Get Started Free</button>
       </div>
       <div class="pricing-card pricing-card--pro reveal reveal-delay-1">
         <div class="pricing-plan">Premium</div>
@@ -1028,7 +1028,7 @@
           <li><span class="icon icon--yes">✓</span> Auto-detect subscriptions</li>
           <li><span class="icon icon--yes">✓</span> Priority support</li>
         </ul>
-        <button class="pricing-btn pricing-btn--primary">Start 7-Day Free Trial</button>
+        <button class="pricing-btn pricing-btn--primary" data-track="pricing_start_trial">Start 7-Day Free Trial</button>
       </div>
     </div>
     <p class="pricing-note">Owner's Premium unlocks family features for all group members. Cancel anytime.</p>
@@ -1042,7 +1042,7 @@
     <h2 class="reveal">Your money story<br>deserves a <span class="glow-green">happy ending</span></h2>
     <p class="reveal reveal-delay-1">Join the waitlist. Be the first to take control when MoneyVerse launches on the Play Store.</p>
     <div class="hero-btns reveal reveal-delay-2">
-      <a href="#" class="btn btn--primary" style="font-size:1.05rem; padding: 18px 36px;">
+      <a href="#" class="btn btn--primary" data-track="footer_join_waitlist" style="font-size:1.05rem; padding: 18px 36px;">
         🚀 Join the Waitlist - It's Free
       </a>
     </div>
@@ -1087,6 +1087,15 @@
   document.querySelectorAll('.nav-links a').forEach(a => {
     a.addEventListener('click', () => {
       document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+
+  // Track CTA clicks → Vercel Analytics custom events
+  document.querySelectorAll('[data-track]').forEach(el => {
+    el.addEventListener('click', () => {
+      const event = el.getAttribute('data-track');
+      // Vercel Web Analytics custom event
+      if (window.va) window.va('event', { name: event });
     });
   });
 </script>
